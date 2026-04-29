@@ -34,9 +34,9 @@ const PRESET_COLORS = [
 function init() {
   // Create a 2D array filled with "#ffffff" and assign it to `grid`
   // Hint: Use Array.from({ length: gridSize }, () => Array(gridSize).fill(...))
-  grid = Array.from({ length: gridSize }, () => {
-    Array(gridSize).fill("#ffffff");
-  });
+  grid = Array.from({ length: gridSize }, () => 
+    Array(gridSize).fill("#ffffff"),
+  );
 
   // Calculate cellSize from 480 / gridSize (use Math.floor)
   cellSize = Math.floor(480 / gridSize);
@@ -78,9 +78,10 @@ function render() {
   if (hoveredCell && !isDrawing) {
     const { row, col } = hoveredCell;
     const previewColor = currentTool == "eraser" ? "#ffffff" : currentColor;
-    ctx.globalAlpha = 0.4;
+    
     
     ctx.fillStyle = previewColor;
+    ctx.globalAlpha = 0.4;
     ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
     ctx.globalAlpha = 1.0;
   }
@@ -97,7 +98,7 @@ function getCellFromMouse(e) {
   const y = e.clientY - rect.top;
 
   // Convert to col and row using Math.floor(x / cellSize) and Math.floor(y / cellSize)
-  const row = Math.floor(y / sellSize);
+  const row = Math.floor(y / cellSize);
   const col = Math.floor(x / cellSize);
 
   // Return { row, col } if within bounds, otherwise return null
