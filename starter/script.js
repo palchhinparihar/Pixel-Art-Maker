@@ -175,16 +175,36 @@ canvas.addEventListener("mouseleave", () => {
 // --- Step 3: Flood fill algorithm ---
 
 function floodFill(row, col, newColor) {
-  // TODO: Get the targetColor from grid[row][col]
-  // TODO: If targetColor equals newColor, return early (nothing to fill)
-  // TODO: Create a stack array with [[row, col]]
-  // TODO: While the stack is not empty:
+  // Get the targetColor from grid[row][col]
+  // If targetColor equals newColor, return early (nothing to fill)
+  // Create a stack array with [[row, col]]
+  // While the stack is not empty:
   //   1. Pop [r, c] from the stack
   //   2. Skip if out of bounds
   //   3. Skip if grid[r][c] !== targetColor
   //   4. Set grid[r][c] to newColor
   //   5. Push all 4 neighbors: [r-1,c], [r+1,c], [r,c-1], [r,c+1]
-  // TODO: Call render()
+  // Call render()
+  const targetColor = grid[row][col];
+  if (targetColor === newColor) return;
+
+  const stack = [[row, col]];
+
+  while (stack.length > 0) {
+    const [r, c] = stack.pop();
+
+    if (r < 0 || r >= gridSize || c < 0 || c >= gridSize) continue;
+    if (grid[r][c] !== targetColor) continue;
+
+    grid[r][c] = newColor;
+
+    stack.push([r - 1, c]);
+    stack.push([r + 1, c]);
+    stack.push([r, c - 1]);
+    stack.push([r, c + 1]);
+
+    render();
+  }
 }
 
 // --- Step 4-a: Build the color palette ---
