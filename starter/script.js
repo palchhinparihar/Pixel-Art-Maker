@@ -222,6 +222,27 @@ function buildPalette() {
   //      - Removes "active" from all swatches
   //      - Adds "active" to this swatch
   //   6. Append the swatch to the palette
+  const palette = document.getElementById("color-palette");
+
+  PRESET_COLORS.forEach((color) => {
+    const swatch = document.createElement("div");
+    swatch.classList.add("color-swatch");
+
+    if (color === currentColor) swatch.classList.add("active");
+
+    swatch.style.backgroundColor = color;
+
+    swatch.addEventListener("click", () => {
+      currentColor = color;
+      document.getElementById("custom-color").value = color;
+
+      document.querySelectorAll(".color-swatch").forEach((s) => s.classList.remove("active"));
+
+      swatch.classList.add("active");
+    });
+
+    palette.appendChild(swatch);
+  });
 }
 
 // --- Step 4-b: Custom color picker ---
